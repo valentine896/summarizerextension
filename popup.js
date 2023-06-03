@@ -55,8 +55,8 @@ async function getSelectedText() {
 // Rest of your code...
 
 async function fetchSummary(text) {
-  console.log('Fetching summary for text:', text);  // Added this line
-  const response = await fetch('https://clientside-jdv7dpgcg-vvv1995-yahoocom.vercel.app/api/summarize', {
+  console.log('Fetching summary for text:', text);
+  const response = await fetch('https://summarizerextension-j36u7edhi-valentine896.vercel.app/api/summarize', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ async function fetchSummary(text) {
     body: JSON.stringify({ text }),
   });
 
-  console.log('Response:', response);  // Added this line
+  console.log('Response:', response);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch summary: ${response.statusText}`);
@@ -78,7 +78,7 @@ async function fetchSummary(text) {
     throw new Error('Unexpected server response');
   }
 
-  console.log('Response data:', responseData);  // Added this line
+  console.log('Response data:', responseData);
 
   const { summary } = responseData;
   return summary;
