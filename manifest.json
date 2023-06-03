@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "TLDR Reddit",
+  "version": "1.0.0",
+  "description": "A browser extension that summarizes Reddit posts using AI.",
+  "icons": {
+    "16": "images/my_icon_16.png",
+    "48": "images/my_icon_48.png",
+    "128": "images/my_icon_128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "https://redditsummarizer-env.eba-tjsqd2af.us-east-2.elasticbeanstalk.com/"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/my_icon_16.png",
+      "48": "images/my_icon_48.png",
+      "128": "images/my_icon_128.png"
+    }
+  }
+}
