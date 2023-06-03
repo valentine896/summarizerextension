@@ -1,4 +1,5 @@
 const axios = require('axios');
+const cors = require('micro-cors')();
 
 const apiKey = process.env.SUMMARIZER_API_KEY;
 
@@ -8,13 +9,13 @@ const calculateMaxTokens = (inputText) => {
   return Math.min(estimatedSummaryTokens, 6000);
 };
 
-module.exports = async (req, res) => {
-  // Set CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+const handler = async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
 
   if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.status(200).end();
     return;
   }
@@ -29,15 +30,16 @@ module.exports = async (req, res) => {
     const gpt3Response = await axios.post(
       'https://api.openai.com/v1/chat/completions',
       {
-        model: "gpt-3.5-turbo",
+        model: 'gpt-3.5-turbo',
         messages: [
           {
-            role: "user",
+            role: 'user',
             content: text,
           },
           {
-            role: "system",
-            content: "Please provide a 5-7 sentence summary of the above text that captures the main idea and conclusion in first person.",
+            role: 'system',
+            content:
+              'Please provide a 5-7 sentence summary of the above text that captures the main idea and conclusion in first person.',
           },
         ],
         max_tokens: maxTokens,
@@ -67,3 +69,5 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: `Error calling GPT-3 API: ${error.message}` });
   }
 };
+
+module.exports = cors(handler);
